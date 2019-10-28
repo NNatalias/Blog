@@ -1,0 +1,29 @@
+:host {
+  display: block;
+  margin-top: 1rem;
+}
+mat-spinner{
+  margin: auto;
+}
+.info-text {
+  text-align: center;
+  font-family: 'Archivo Black', sans-serif;
+  font-size: x-large;
+  color: white;
+}
+mat-card-title{
+  color: #ff7043;
+  font-size: larger;
+  padding: 0 0 9px 0;
+}
+mat-card{
+  margin: 1rem auto;
+  border-radius: 40px;
+  padding: 5%;
+  width: 80%;
+}
+.post-image img {
+  border-radius: 8px;
+  width: 100%;
+  margin: 0;
+}

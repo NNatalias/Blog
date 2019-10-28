@@ -1,0 +1,21 @@
+<div *ngIf="posts.length > 0 && !isLoading">
+<mat-spinner color="accent" *ngIf="isLoading"></mat-spinner>
+  <mat-card *ngFor="let post of posts">
+      <mat-card-title>
+      {{ post.title }}
+      </mat-card-title>
+
+    <div class="post-image">
+      <img mat-card-image [src]="post.imagePath" [alt]="post.title">
+    </div>
+    <mat-card-content>
+    <p style="padding:  10px 0; font-size: large;">{{ post.content }}</p>
+    </mat-card-content>
+    <mat-card-actions>
+      <a mat-button color="accent" [routerLink]="['/edit', post.id]"><mat-icon>edit</mat-icon></a>
+      <button mat-button color="warn" (click)="onDelete(post.id)"><mat-icon>delete</mat-icon></button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+<p class="info-text mat-body-1" *ngIf="posts.length <= 0 && !isLoading">No posts added yet!</p>
+
