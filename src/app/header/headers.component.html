@@ -1,4 +1,23 @@
-<ul>
-  <li routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"><a routerLink="/">BLOG</a></li>
-  <li routerLinkActive="active"><a routerLink="/create" style="margin-left: 2%;"><mat-icon>add_circle</mat-icon></a></li>
-</ul>
+<div class="head">
+  <div><ul>
+  <li  routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+    <a routerLink="/">BLOG</a>
+  </li>
+  <li *ngIf="userIsAuthenticated" routerLinkActive="active">
+    <a routerLink="/create" style="margin-left: 2%;">
+      <mat-icon>add_circle</mat-icon>
+    </a>
+  </li>
+</ul></div>
+<div><ul>
+  <li *ngIf="!userIsAuthenticated" [routerLinkActiveOptions]="{exact:true}" routerLinkActive="active">
+    <a  routerLink="/login">Login</a>
+  </li>
+  <li *ngIf="!userIsAuthenticated" routerLinkActive="active">
+    <a  routerLink="/signup">SignUp</a>
+  </li>
+  <li *ngIf="userIsAuthenticated">
+    <a  (click)="onLogout()">LogOut</a>
+  </li>
+</ul></div>
+</div>

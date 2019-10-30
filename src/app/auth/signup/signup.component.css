@@ -1,0 +1,17 @@
+mat-form-field {
+  width: 100%;
+}
+mat-card{
+  margin: 1rem auto;
+  border-radius: 40px;
+  padding: 5%;
+  width: 80%;
+}
+mat-spinner {
+  margin: auto;
+}
+mat-card-title{
+  font-family: 'Archivo Black', sans-serif;
+  font-size:x-large;
+  color: #ff7043;
+}
