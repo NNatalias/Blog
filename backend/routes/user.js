@@ -22,7 +22,7 @@ router.post("/signup", (req, res, next) => {
       })
       .catch(err => {
         res.status(500).json({
-          error: err
+          message: "User with this email already exists!"
         });
       });
   });
@@ -34,7 +34,7 @@ router.post("/login", (req, res, next) => {
     .then(user => {
       if (!user) {
         return res.status(401).json({
-          message: "Auth failed"
+          message: "User with such login is not registered"
         });
       }
       fetchedUser = user;
@@ -43,7 +43,7 @@ router.post("/login", (req, res, next) => {
     .then(result => {
       if (!result) {
         return res.status(401).json({
-          message: "Auth failed"
+          message: "Wrong password! Please try again"
         });
       }
       const token = jwt.sign(
@@ -53,12 +53,13 @@ router.post("/login", (req, res, next) => {
       );
       res.status(200).json({
         token: token,
-        expiresIn: 3600
+        expiresIn: 3600,
+        userId: fetchedUser._id
       });
     })
     .catch(err => {
-      return res.status(401).json({
-        message: "Auth failed"
+      res.status(500).json({
+        message: "Invalid authentication credentials!"
       });
     });
 });

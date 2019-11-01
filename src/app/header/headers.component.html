@@ -9,14 +9,14 @@
     </a>
   </li>
 </ul></div>
-<div><ul>
+<div><ul >
   <li *ngIf="!userIsAuthenticated" [routerLinkActiveOptions]="{exact:true}" routerLinkActive="active">
     <a  routerLink="/login">Login</a>
   </li>
   <li *ngIf="!userIsAuthenticated" routerLinkActive="active">
     <a  routerLink="/signup">SignUp</a>
   </li>
-  <li *ngIf="userIsAuthenticated">
+  <li style="cursor: pointer;" *ngIf="userIsAuthenticated">
     <a  (click)="onLogout()">LogOut</a>
   </li>
 </ul></div>

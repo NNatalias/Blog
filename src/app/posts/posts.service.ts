@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Subject } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { Post } from './post.model';
-import { Router } from '@angular/router';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Subject} from 'rxjs';
+import {map} from 'rxjs/operators';
+import {Post} from './post.model';
+import {Router} from '@angular/router';
 
 @Injectable({ providedIn: 'root' })
 export class PostsService {
@@ -22,7 +22,8 @@ export class PostsService {
               title: post.title,
               content: post.content,
               id: post._id,
-              imagePath: post.imagePath
+              imagePath: post.imagePath,
+              creator: post.creator
             };
           });
         })
@@ -38,7 +39,7 @@ export class PostsService {
   }
 
   getPost(id: string) {
-    return this.http.get<{ _id: string, title: string, content: string, imagePath: string }>(
+    return this.http.get<{ _id: string, title: string, content: string, imagePath: string, creator: string; }>(
       'http://localhost:3000/api/posts/' + id
     );
   }
@@ -54,16 +55,17 @@ export class PostsService {
         postData
       )
       .subscribe(responseData => {
-        const post: Post = {
-          id: responseData.post.id,
-          title,
-          content,
-          imagePath: responseData.post.imagePath
-        };
-        this.posts.push(post);
-        this.postsUpdated.next([...this.posts]);
-        this.router.navigate(['/']);
-      });
+      const post: Post = {
+        id: responseData.post.id,
+        title,
+        content,
+        imagePath: responseData.post.imagePath,
+        creator: null
+      };
+      this.posts.push(post);
+      this.postsUpdated.next([...this.posts]);
+      this.router.navigate(['/']);
+    });
   }
 
   updatePost(id: string, title: string, content: string, image: File | string) {
@@ -79,7 +81,8 @@ export class PostsService {
         id,
         title,
         content,
-        imagePath: image
+        imagePath: image,
+        creator: null
       };
     }
     this.http
@@ -91,7 +94,8 @@ export class PostsService {
           id,
           title,
           content,
-          imagePath: ''
+          imagePath: '',
+          creator: null
         };
         updatedPosts[oldPostIndex] = post;
         this.posts = updatedPosts;
@@ -104,8 +108,7 @@ export class PostsService {
     this.http
       .delete('http://localhost:3000/api/posts/' + postId)
       .subscribe(() => {
-        const updatedPosts = this.posts.filter(post => post.id !== postId);
-        this.posts = updatedPosts;
+        this.posts = this.posts.filter(post => post.id !== postId);
         this.postsUpdated.next([...this.posts]);
       });
   }

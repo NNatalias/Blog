@@ -39,7 +39,8 @@ router.post(
     const post = new Post({
       title: req.body.title,
       content: req.body.content,
-      imagePath: url + "/images/" + req.file.filename
+      imagePath: url + "/images/" + req.file.filename,
+      creator: req.userData.userId
     });
     post.save().then(createdPost => {
       res.status(201).json({
@@ -49,7 +50,12 @@ router.post(
           id: createdPost._id
         }
       });
-    });
+    })
+    .catch(error => {
+        res.status(500).json({
+          message: "Creating a post failed!"
+        });
+      });
   }
 );
 
@@ -67,12 +73,24 @@ router.put(
       _id: req.body.id,
       title: req.body.title,
       content: req.body.content,
-      imagePath: imagePath
+      imagePath: imagePath,
+      creator: req.userData.userId
     });
-    console.log(post);
-    Post.updateOne({ _id: req.params.id }, post).then(result => {
-      res.status(200).json({ message: "Update successful!" });
-    });
+    Post.updateOne(
+      { _id: req.params.id, creator: req.userData.userId },
+      post
+    ).then(result => {
+      if (result.nModified > 0) {
+        res.status(200).json({ message: "Update successful!" });
+      } else {
+        res.status(401).json({ message: "Post not changed!" });
+      }
+    })
+      .catch(error => {
+        res.status(500).json({
+          message: "Couldn't update post!"
+        });
+      });
   }
 );
 
@@ -82,7 +100,12 @@ router.get("", (req, res, next) => {
       message: "Posts fetched successfully!",
       posts: documents
     });
-  });
+  })
+    .catch(error => {
+      res.status(500).json({
+        message: "Fetching posts failed!"
+      });
+    });
 });
 
 router.get("/:id", (req, res, next) => {
@@ -92,14 +115,28 @@ router.get("/:id", (req, res, next) => {
     } else {
       res.status(404).json({ message: "Post not found!" });
     }
-  });
+  })
+    .catch(error => {
+      res.status(500).json({
+        message: "Fetching post failed!"
+      });
+    });
 });
 
 router.delete("/:id", checkAuth, (req, res, next) => {
-  Post.deleteOne({ _id: req.params.id }).then(result => {
-    console.log(result);
-    res.status(200).json({ message: "Post deleted!" });
-  });
+  Post.deleteOne({ _id: req.params.id, creator: req.userData.userId }).then(
+    result => {
+      if (result.n > 0) {
+        res.status(200).json({ message: "Deletion successful!" });
+      } else {
+        res.status(401).json({ message: "Not authorized!" });
+      }
+    })
+    .catch(error => {
+      res.status(500).json({
+        message: "Deleting posts failed!"
+      });
+    });
 });
 
 module.exports = router;

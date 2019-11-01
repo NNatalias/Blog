@@ -11,7 +11,7 @@
     <mat-card-content>
     <p style="padding:  10px 0; font-size: large;">{{ post.content }}</p>
     </mat-card-content>
-    <mat-card-actions *ngIf="userIsAuthenticated">
+    <mat-card-actions *ngIf="userIsAuthenticated && userId === post.creator">
       <a mat-button color="accent" [routerLink]="['/edit', post.id]"><mat-icon>edit</mat-icon></a>
       <button mat-button color="warn" (click)="onDelete(post.id)"><mat-icon>delete</mat-icon></button>
     </mat-card-actions>
