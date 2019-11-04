@@ -11,8 +11,7 @@ ul{
   padding: 0 ;
 }
 li{
-  padding: 8px 30px;
-  font-size: 80px;
+  padding: 8px 20px;
   font-weight: bolder;
   font-family: 'Archivo Black', sans-serif;
   display: inline;
@@ -30,4 +29,38 @@ a:active {
 }
 .active a {
   color: #ff7043;
+}
+@media (max-width: 800px) {
+  a {
+    font-size: 60px;
+  }
+  li{
+    padding: 8px 16px;
+  }
+  mat-icon{
+    font-size: 40px;
+  }
+}
+@media (max-width: 600px) {
+  a {
+    font-size: 35px;
+  }
+
+  li {
+    padding: 8px 12px;
+  }
+  mat-icon{
+    font-size: 45px;
+  }
+}
+ @media (max-width: 400px) {
+    a {
+      font-size: 25px;
+    }
+    li{
+      padding: 8px ;
+    }
+   mat-icon{
+     font-size: 35px;
+   }
 }

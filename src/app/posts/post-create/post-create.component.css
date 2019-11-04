@@ -1,8 +1,8 @@
 mat-card{
   margin: 1rem auto;
   border-radius: 40px;
-  padding: 5%;
-  width: 80%;
+  padding: 3%;
+  width: 35%;
 }
 mat-form-field{
   width: 100%;
@@ -17,4 +17,31 @@ input[type="file"] {
 }
 .image-preview img {
   height: 100%;
+}
+@media (max-width: 1050px) {
+  mat-card{
+    padding: 4%;
+    width: 45%;
+  }
+}
+
+@media (max-width: 800px) {
+  mat-card{
+    padding: 4%;
+    width: 50%;
+  }
+}
+@media (max-width: 600px) {
+  mat-card{
+    width: 80%;
+    padding: 6%;
+    margin: 0 6%;
+  }
+}
+@media (max-width: 400px) {
+  mat-card{
+    width: 80%;
+    padding: 7%;
+    margin: 0 5%;
+  }
 }
