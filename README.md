@@ -1,5 +1,5 @@
 # Blog
-Small project for my training)
+Small project for my training with 
 Angular2, NodeJS(ExpressJS) and MongoDB.
 
 ## Development server
