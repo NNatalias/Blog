@@ -1,5 +1,5 @@
 # Blog
-
+Small project for my training)
 Angular2, NodeJS(ExpressJS) and MongoDB.
 
 ## Development server
