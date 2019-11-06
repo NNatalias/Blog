@@ -9,7 +9,7 @@
       <img mat-card-image [src]="post.imagePath" [alt]="post.title">
     </div>
     <mat-card-content>
-    <p style="padding:  10px 0; font-size: large;">{{ post.content }}</p>
+    <p style="padding-top: 10px;font-size: large;">{{ post.content }}</p>
     </mat-card-content>
     <mat-card-actions *ngIf="userIsAuthenticated && userId === post.creator">
       <a mat-button color="accent" [routerLink]="['/edit', post.id]"><mat-icon>edit</mat-icon></a>
