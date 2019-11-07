@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import { ActivatedRoute, ParamMap } from '@angular/router';
-
-import { PostsService } from '../posts.service';
-import { Post } from '../post.model';
+import {ActivatedRoute, ParamMap} from '@angular/router';
+import {AuthService} from '../../auth/auth.service';
+import {PostsService} from '../posts.service';
+import {Post} from '../post.model';
 import {mimeType} from './mime-type.validator';
 
 @Component({
@@ -12,26 +12,28 @@ import {mimeType} from './mime-type.validator';
   styleUrls: ['./post-create.component.css']
 })
 export class PostCreateComponent implements OnInit {
-  enteredTitle = '';
-  enteredContent = '';
   post: Post;
   isLoading = false;
   form: FormGroup;
   imagePreview: string;
   private mode = 'create';
   private postId: string;
+  userId: string;
 
   constructor(
     public postsService: PostsService,
-    public route: ActivatedRoute
-  ) {}
+    public route: ActivatedRoute,
+    private authService: AuthService
+  ) {
+  }
 
   ngOnInit() {
+    this.userId = this.authService.getUserId();
     this.form = new FormGroup({
       title: new FormControl(null, {
         validators: [Validators.required, Validators.minLength(3)]
       }),
-      content: new FormControl(null, { validators: [Validators.required] }),
+      content: new FormControl(null, {validators: [Validators.required]}),
       image: new FormControl(null, {
         validators: [Validators.required],
         asyncValidators: [mimeType]
@@ -46,6 +48,7 @@ export class PostCreateComponent implements OnInit {
           this.isLoading = false;
           this.post = {
             id: postData._id,
+            nameUser: postData.nameUser,
             title: postData.title,
             content: postData.content,
             imagePath: postData.imagePath,
@@ -66,7 +69,7 @@ export class PostCreateComponent implements OnInit {
 
   onImagePicked(event: Event) {
     const file = (event.target as HTMLInputElement).files[0];
-    this.form.patchValue({ image: file });
+    this.form.patchValue({image: file});
     this.form.get('image').updateValueAndValidity();
     const reader = new FileReader();
     reader.onload = () => {

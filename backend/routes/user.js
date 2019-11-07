@@ -6,9 +6,25 @@ const User = require("../models/user");
 
 const router = express.Router();
 
+router.get("/:id", (req, res, next) => {
+  User.findById(req.params.id).then(user => {
+    if (user) {
+      res.status(200).json(user);
+    } else {
+      res.status(404).json({ message: "User not found!1" });
+    }
+  })
+    .catch(error => {
+      res.status(500).json({
+        message: "Fetching user failed!1"
+      });
+    });
+});
+
 router.post("/signup", (req, res, next) => {
   bcrypt.hash(req.body.password, 10).then(hash => {
     const user = new User({
+      nameUser: req.body.nameUser,
       email: req.body.email,
       password: hash
     });

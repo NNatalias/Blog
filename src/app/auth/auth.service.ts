@@ -3,7 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 
-import { AuthData } from './auth-data.model';
+import { AuthData, AuthDataforSignup} from './auth-data.model';
+import {PostsService} from '../posts/posts.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -13,7 +14,7 @@ export class AuthService {
   private userId: string;
   private authStatusListener = new Subject<boolean>();
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router, private postService: PostsService) {}
 
   getToken() {
     return this.token;
@@ -31,8 +32,8 @@ export class AuthService {
     return this.authStatusListener.asObservable();
   }
 
-  createUser(email: string, password: string) {
-    const authData: AuthData = { email, password };
+  createUser(nameUser: string, email: string, password: string ) {
+    const authData: AuthDataforSignup = {nameUser, email, password };
     this.http
       .post('http://localhost:3000/api/user/signup', authData)
       .subscribe(() => {
@@ -64,6 +65,7 @@ export class AuthService {
           console.log(expirationDate);
           this.saveAuthData(token, expirationDate, this.userId);
           this.router.navigate(['/']);
+          this.postService.getUser(response.userId);
         }
       }, error => {
         this.authStatusListener.next(false);
@@ -113,19 +115,23 @@ export class AuthService {
     localStorage.removeItem('token');
     localStorage.removeItem('expiration');
     localStorage.removeItem('userId');
+    localStorage.removeItem('nameUser');
   }
 
   private getAuthData() {
     const token = localStorage.getItem('token');
     const expirationDate = localStorage.getItem('expiration');
     const userId = localStorage.getItem('userId');
+    const nameUser = localStorage.getItem('nameUser');
+    this.postService.user.nameUser = localStorage.getItem('nameUser');
     if (!token || !expirationDate) {
       return;
     }
     return {
       token,
       expirationDate: new Date(expirationDate),
-      userId
+      userId,
+      nameUser
     };
   }
 }

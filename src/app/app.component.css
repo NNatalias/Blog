@@ -1,6 +1,6 @@
 main{
   width: 100%;
-  margin: 1rem auto;
+  margin: auto;
   overflow-y: scroll;
   height: 80%;
 }

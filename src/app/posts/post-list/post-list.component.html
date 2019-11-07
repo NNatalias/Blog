@@ -2,16 +2,18 @@
 <mat-spinner color="accent" *ngIf="isLoading"></mat-spinner>
   <mat-card *ngFor="let post of posts">
       <mat-card-title>
-      {{ post.title }}
+        {{post.nameUser}}
       </mat-card-title>
-
+    <mat-card-content>
+      {{ post.title }}
+    </mat-card-content>
     <div class="post-image">
       <img mat-card-image [src]="post.imagePath" [alt]="post.title">
     </div>
     <mat-card-content>
-    <p style="padding:  10px 0; font-size: large;">{{ post.content }}</p>
+    <p style="padding-top: 10px; font-size: large;">{{ post.content }}</p>
     </mat-card-content>
-    <mat-card-actions *ngIf="userIsAuthenticated && userId === post.creator">
+    <mat-card-actions style="padding: 0;" *ngIf="userIsAuthenticated && userId === post.creator">
       <a mat-button color="accent" [routerLink]="['/edit', post.id]"><mat-icon>edit</mat-icon></a>
       <button mat-button color="warn" (click)="onDelete(post.id)"><mat-icon>delete</mat-icon></button>
     </mat-card-actions>

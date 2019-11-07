@@ -37,6 +37,7 @@ router.post(
   (req, res, next) => {
     const url = req.protocol + "://" + req.get("host");
     const post = new Post({
+      nameUser: req.body.nameUser,
       title: req.body.title,
       content: req.body.content,
       imagePath: url + "/images/" + req.file.filename,
@@ -47,7 +48,7 @@ router.post(
         message: "Post added successfully",
         post: {
           ...createdPost,
-          id: createdPost._id
+          id: createdPost._id,
         }
       });
     })
@@ -71,6 +72,7 @@ router.put(
     }
     const post = new Post({
       _id: req.body.id,
+      nameUser: req.body.nameUser,
       title: req.body.title,
       content: req.body.content,
       imagePath: imagePath,

@@ -1,9 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
+import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Subscription} from 'rxjs';
 
-import { Post } from '../post.model';
-import { PostsService } from '../posts.service';
-import { AuthService } from '../../auth/auth.service';
+import {Post} from '../post.model';
+import {PostsService} from '../posts.service';
+import {AuthService} from '../../auth/auth.service';
 
 @Component({
   selector: 'app-post-list',
@@ -18,7 +18,8 @@ export class PostListComponent implements OnInit, OnDestroy {
   private authStatusSub: Subscription;
   userId: string;
 
-  constructor(public postsService: PostsService, private authService: AuthService) {}
+  constructor(public postsService: PostsService, private authService: AuthService) {
+  }
 
   ngOnInit() {
     this.isLoading = true;

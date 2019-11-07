@@ -11,9 +11,12 @@ mat-spinner{
   font-size: x-large;
   color: white;
 }
+mat-card-content{
+  font-size: large;
+}
 mat-card-title{
   color: #ff7043;
-  font-size: larger;
+  font-size: x-large;
   padding: 0 0 9px 0;
 }
 mat-card{
